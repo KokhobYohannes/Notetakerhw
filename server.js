@@ -25,7 +25,8 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/notes', (req, res)=>{
-    res.render('notes.html')
+    // res.render('notes.html')
+    res.sendFile(path.join(__dirname, 'notes.html'))
 })
 
 app.use('/api/notes', noteRouter);
