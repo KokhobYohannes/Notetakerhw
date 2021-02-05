@@ -3,8 +3,8 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const PORT = process.env.PORT;
-const env = process.env.NODE_env; 
+const PORT = process.env.PORT || 3000;
+const env = process.env.NODE_env || "development"; 
 const app = express();
 const server = http.createServer(app);
 
@@ -12,10 +12,6 @@ const noteRouter = require('./route/note')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-
-// serving html content with ejs templating engine
-app.set('views', __dirname + 'views')
-app.engine('html', require('ejs').renderFile)
 
 app.use(express.static(path.join(__dirname, 'views')));
 
@@ -26,7 +22,7 @@ app.get('/', (req, res)=>{
 
 app.get('/notes', (req, res)=>{
     // res.render('notes.html')
-    res.sendFile(path.join(__dirname, 'notes.html'))
+    res.sendFile(path.join(__dirname, '/views/notes.html'))
 })
 
 app.use('/api/notes', noteRouter);
